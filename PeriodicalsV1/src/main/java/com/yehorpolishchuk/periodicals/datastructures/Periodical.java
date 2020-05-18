@@ -1,8 +1,9 @@
-package com.yehorpolishchuk.periodicals.db.dao;
+package com.yehorpolishchuk.periodicals.datastructures;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 
 /**
@@ -14,8 +15,11 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@ToString
 public class Periodical {
     private String id;
     private String name;
     private double frequencyPerYear;
+//    private String type;
+//    private String genre;
 }

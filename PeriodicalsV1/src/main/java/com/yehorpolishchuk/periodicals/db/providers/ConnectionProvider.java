@@ -10,8 +10,10 @@ import java.util.Properties;
 
 public class ConnectionProvider {
     public static Connection getConnection() throws FileNotFoundException, IOException, SQLException {
-        String rootPath = Thread.currentThread().getContextClassLoader().getResource("").getPath();
+//        String rootPath = Thread.currentThread().getContextClassLoader().getResource("").getPath();
+        String rootPath = System.getProperty("user.dir") + "\\src\\main\\resources\\";
         String appConfigPath = rootPath + "application.properties";
+
 
         Properties appProps = new Properties();
         appProps.load(new FileInputStream(appConfigPath));

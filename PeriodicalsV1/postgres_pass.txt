@@ -1,0 +1,3 @@
+superuser: postgres
+password: 120199dimamin1
+port 5432
