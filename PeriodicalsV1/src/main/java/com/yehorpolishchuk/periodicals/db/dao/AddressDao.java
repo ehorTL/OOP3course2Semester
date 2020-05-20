@@ -52,6 +52,8 @@ public class AddressDao {
      * Pass connection while using transactions.
      * */
     public static int addAddress(Address address, Connection conn) throws ServerException {
+        boolean commitInTheEnd = (conn == null);
+
         int keyGenerated = Constants.NOT_ID_STUB;
         if (address == null){
             return keyGenerated;
@@ -61,6 +63,7 @@ public class AddressDao {
             if (conn == null){
                 conn = ConnectionProvider.getConnection();
             }
+            conn.setAutoCommit(false);
 
             PreparedStatement ps = conn.prepareStatement(queryAddAddress, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, address.getCountry());
@@ -80,6 +83,9 @@ public class AddressDao {
             }
 
             logger.debug( AddressDao.class.getName() + " addAddress: "  + rowsAffected + " rowsAffected");
+            if (commitInTheEnd){
+                conn.commit();
+            }
         } catch (IOException | SQLException e) {
             logger.error(AddressDao.class.getName() + " Connection error: " + e.getMessage());
             throw new ServerException();

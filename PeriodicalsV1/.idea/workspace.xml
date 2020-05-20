@@ -41,20 +41,27 @@
   </component>
   <component name="ProjectId" id="1brc6kpg7lPvaYmlRYESNujTO1M" />
   <component name="PropertiesComponent">
+    <property name="Downloaded.Files.Path.Enabled" value="false" />
+    <property name="Repository.Attach.Annotations" value="false" />
+    <property name="Repository.Attach.JavaDocs" value="false" />
+    <property name="Repository.Attach.Sources" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary" value="JUnit4" />
     <property name="com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit4" value="" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
-    <property name="project.structure.side.proportion" value="0.0" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="project.structure.side.proportion" value="0.40186915" />
+    <property name="settings.editor.selected.configurable" value="MavenSettings" />
   </component>
   <component name="RecentsManager">
     <key name="CreateTestDialog.RecentsKey">
       <recent name="com.yehorpolishchuk.periodicals.db.dao" />
+      <recent name="com.yehorpolishchuk.periodicals.datastructures" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="com.yehorpolishchuk.periodicals.datastructures" />
     </key>
     <key name="CreateTestDialog.Recents.Supers">
@@ -78,7 +85,7 @@
       <module name="PeriodicalsV1" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.yehorpolishchuk.periodicals.db.dao.*" />
+          <option name="PATTERN" value="com.yehorpolishchuk.periodicals.datastructures.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -93,7 +100,7 @@
       <module name="PeriodicalsV1" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.yehorpolishchuk.periodicals.db.dao.*" />
+          <option name="PATTERN" value="com.yehorpolishchuk.periodicals.datastructures.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -123,7 +130,7 @@
       <module name="PeriodicalsV1" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.yehorpolishchuk.periodicals.db.dao.*" />
+          <option name="PATTERN" value="com.yehorpolishchuk.periodicals.datastructures.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -138,13 +145,75 @@
       <module name="PeriodicalsV1" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.yehorpolishchuk.periodicals.db.dao.*" />
+          <option name="PATTERN" value="com.yehorpolishchuk.periodicals.datastructures.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="com.yehorpolishchuk.periodicals.db.dao" />
       <option name="MAIN_CLASS_NAME" value="com.yehorpolishchuk.periodicals.db.dao.SubscriptionDaoTest" />
       <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="TomeeConfiguration" factoryName="Local" ALTERNATIVE_JRE_ENABLED="false">
+      <deployment />
+      <server-settings>
+        <option name="BASE_DIRECTORY_NAME" value="_PeriodicalsV1" />
+      </server-settings>
+      <predefined_log_file enabled="true" id="Tomcat" />
+      <predefined_log_file enabled="true" id="Tomcat Catalina" />
+      <predefined_log_file id="Tomcat Manager" />
+      <predefined_log_file id="Tomcat Host Manager" />
+      <predefined_log_file id="Tomcat Localhost Access" />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="65157" />
+      </RunnerSettings>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Cover">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Debug">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Run">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -176,6 +245,13 @@
       <workItem from="1589616404075" duration="15053000" />
       <workItem from="1589704821128" duration="10400000" />
       <workItem from="1589728523886" duration="5850000" />
+      <workItem from="1589811749339" duration="2091000" />
+      <workItem from="1589815096816" duration="280000" />
+      <workItem from="1589815439198" duration="3885000" />
+      <workItem from="1589822475026" duration="10317000" />
+      <workItem from="1589870125127" duration="16137000" />
+      <workItem from="1589909932703" duration="14396000" />
+      <workItem from="1589991953983" duration="2955000" />
     </task>
     <servers />
   </component>

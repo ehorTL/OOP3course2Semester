@@ -44,12 +44,19 @@ public class ReaderDao {
     /**
      * Reader primary key generated is returned ( > 0 ).
      * */
-    public static int addReader(Reader reader) throws ServerException {
+    public static int addReader(Reader reader, Connection conn) throws ServerException {
+        boolean commitInTheEnd = (conn == null);
+
         int readerId = -1;
-        try (Connection conn = ConnectionProvider.getConnection()){
+        try {
+            if (conn == null){
+                conn = ConnectionProvider.getConnection();
+            }
+
             conn.setAutoCommit(false);
 
             int newAddressId = AddressDao.addAddress(reader.getAddress(), conn);
+            reader.getAddress().setId(Integer.toString(newAddressId));
 
             PreparedStatement ps = conn.prepareStatement(queryAddReader, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, reader.getFirstName());
@@ -60,6 +67,7 @@ public class ReaderDao {
             ResultSet rsKeys = ps.getGeneratedKeys();
             if (rsKeys.next()){
                 readerId = rsKeys.getInt("rid");
+                logger.info("READER ID INSERTED : " + readerId);
             }
 
             int finalReaderId = readerId;
@@ -70,7 +78,9 @@ public class ReaderDao {
                 ContactInfoDao.addContactNumberByReaderId(finalReaderId, reader.getContactInfo().getNumbers().get(i), conn);
             }
 
-            conn.commit();
+            if (commitInTheEnd){
+                conn.commit();
+            }
         } catch (IOException | SQLException e) {
             logger.error(AddressDao.class.getName() + " Connection error: " + e.getMessage());
         }

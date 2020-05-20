@@ -20,7 +20,6 @@ public class Subscription {
     private boolean isPaid;
     private int quantity;
     private int paymentId;
-
     private Payment payment;
     private String id;
 }

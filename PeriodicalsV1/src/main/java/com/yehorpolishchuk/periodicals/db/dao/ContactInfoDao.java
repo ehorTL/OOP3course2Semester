@@ -61,6 +61,8 @@ public class ContactInfoDao {
     }
 
     public static String addContactNumberByReaderId(int id, String contactNumber, Connection conn) throws ServerException {
+        boolean commitInTheEnd = (conn == null);
+
         if (contactNumber == null){
             return null;
         }
@@ -69,6 +71,7 @@ public class ContactInfoDao {
             if (conn == null){
                 conn = ConnectionProvider.getConnection();
             }
+            conn.setAutoCommit(false);
 
             PreparedStatement ps = conn.prepareStatement(queryAddContactPhoneNumberByReaderId);
             ps.setInt(1, id);
@@ -81,6 +84,9 @@ public class ContactInfoDao {
             }
 
             logger.debug(AddressDao.class.getName() + " addContactNumberByReaderId: " + rowsAffected + " rowsAffected");
+            if (commitInTheEnd){
+                conn.commit();
+            }
         } catch (IOException | SQLException e) {
             logger.error(AddressDao.class.getName() + " Connection error: " + e.getMessage());
             throw new ServerException();
@@ -90,6 +96,8 @@ public class ContactInfoDao {
     }
 
     public static String addContactMailByReaderId(int id, String email, Connection conn) throws ServerException {
+        boolean commitInTheEnd = (conn == null);
+
         if (email == null){
             return null;
         }
@@ -99,6 +107,7 @@ public class ContactInfoDao {
                 conn = ConnectionProvider.getConnection();
             }
 
+            conn.setAutoCommit(false);
             PreparedStatement ps = conn.prepareStatement(queryAddContactMailByReaderId);
             ps.setInt(1, id);
             ps.setString(2, email);
@@ -110,6 +119,9 @@ public class ContactInfoDao {
             }
 
             logger.debug(AddressDao.class.getName() + " addContactMailByReaderId: " + rowsAffected + " rowsAffected");
+            if (commitInTheEnd){
+                conn.commit();
+            }
         } catch (IOException | SQLException e) {
             logger.error(AddressDao.class.getName() + " Connection error: " + e.getMessage());
             throw new ServerException();

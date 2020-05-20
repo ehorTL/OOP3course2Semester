@@ -5,16 +5,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.postgresql.util.PGmoney;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
-import java.util.ArrayList;
 
-/**
- *
- */
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -72,4 +66,6 @@ public class Payment {
      * Payer (reader) id
      * */
     private String readerId;
+
+    private String fromAccount;
 }

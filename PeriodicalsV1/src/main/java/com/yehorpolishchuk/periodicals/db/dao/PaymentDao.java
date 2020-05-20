@@ -14,8 +14,8 @@ import java.time.LocalDateTime;
 public class PaymentDao {
 
     private static final Logger logger = LogManager.getRootLogger();
-    private static final  String queryAddPayment = "INSERT INTO payment (toaccount, sum, currencycode, paymentdatetime, description, rid) " +
-            "VALUES (?, ?, ?, ?, ?, ?)";
+    private static final  String queryAddPayment = "INSERT INTO payment (toaccount, sum, currencycode, paymentdatetime, description, rid, " +
+            "fromaccount) VALUES (?, ?, ?, ?, ?, ?, ?)";
     private static final  String queryGetPaymentById = "SELECT * FROM payment WHERE pid=?";
     private static final String queryDeletePayment = "DELETE FROM payment WHERE pid=?";
 
@@ -24,8 +24,10 @@ public class PaymentDao {
      * Return key generated
      * */
     public static int addPayment(Payment payment, Connection conn) throws ServerException {
+        boolean commitInTheEnd = (conn == null);
         int key = Constants.NOT_ID_STUB;
         if (payment == null){
+            logger.warn("PAYMENT IS NULL");
             return key;
         }
 
@@ -33,7 +35,7 @@ public class PaymentDao {
             if (conn == null){
                 conn = ConnectionProvider.getConnection();
             }
-
+            conn.setAutoCommit(false);
             PreparedStatement ps = conn.prepareStatement(queryAddPayment, Statement.RETURN_GENERATED_KEYS);
 
             ps.setString(1, payment.getTransferredToAccount());
@@ -41,11 +43,12 @@ public class PaymentDao {
             ps.setString(3, payment.getCurrencyCode());
             ps.setObject(4, payment.getPaymentDateTime());
             ps.setString(5, payment.getDescription());
-            ps.setDouble(6, Double.parseDouble(payment.getReaderId()));
+            ps.setInt(6, Integer.parseInt(payment.getReaderId()));
+            ps.setString(7, payment.getFromAccount());
 
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected == 0){
-                logger.warn("Cannot insert payment");
+                logger.warn("CANNOT INSERT PAYMENT");
                 return key;
             }
 
@@ -55,6 +58,10 @@ public class PaymentDao {
             }
 
             logger.debug(AddressDao.class.getName() + " addPayment: " + rowsAffected + " rowsAffected");
+
+            if (commitInTheEnd){
+                conn.commit();
+            }
         } catch (IOException | SQLException e) {
             logger.error(AddressDao.class.getName() + " Connection error: " + e.getMessage());
             throw new ServerException();
@@ -77,6 +84,7 @@ public class PaymentDao {
                 payment.setPaymentDateTime((LocalDateTime) rs.getObject(4));
                 payment.setDescription(rs.getString(5));
                 payment.setReaderId(Integer.toString(rs.getInt(6)));
+                payment.setFromAccount(rs.getString(7));
             }
         } catch (IOException | SQLException e) {
             logger.error(AddressDao.class.getName() + " Connection error: " + e.getMessage());
@@ -94,7 +102,7 @@ public class PaymentDao {
             int rowsAffected = ps.executeUpdate();
 
             if (rowsAffected == 0){
-                logger.warn("Cannot delete payment");
+                logger.warn("CANNOT DELETE PAYMENT");
             }
         } catch (IOException | SQLException e) {
             logger.error(AddressDao.class.getName() + " Connection error: " + e.getMessage());

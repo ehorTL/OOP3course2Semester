@@ -13,10 +13,10 @@ import java.util.ArrayList;
 public class PeriodicalDao {
     private static final Logger logger = LogManager.getRootLogger();
 
-    private static final String queryAddPeriodical = "INSERT INTO periodical (name, frequency) VALUES (?, ?)";
+    private static final String queryAddPeriodical = "INSERT INTO periodical (name, frequency, priceperone, descr) VALUES (?, ?, ?, ?)";
     private static final String queryGetPeriodical = "SELECT * FROM periodical WHERE pid=?";
     private static final String queryGetAllPeriodicals = "SELECT * FROM periodical";
-    private static final String queryEditPeriodical = "UPDATE periodical SET name=?, frequency=? WHERE pid=?";
+    private static final String queryEditPeriodical = "UPDATE periodical SET name=?, frequency=?, priceperone=?, descr=? WHERE pid=?";
     private static final String queryDeletePeriodical = "DELETE FROM periodical WHERE pid=?";
 
     public static int addPeriodical(Periodical periodical) throws ServerException {
@@ -26,6 +26,8 @@ public class PeriodicalDao {
             PreparedStatement ps = conn.prepareStatement(queryAddPeriodical, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, periodical.getName());
             ps.setDouble(2, periodical.getFrequencyPerYear());
+            ps.setDouble(3, periodical.getPricePerOne());
+            ps.setString(4, periodical.getDescription());
 
             int rowsAffected = ps.executeUpdate();
             logger.debug(AddressDao.class.getName() + " addPeriodical: " + rowsAffected + " rowsAffected");
@@ -54,6 +56,8 @@ public class PeriodicalDao {
                 periodical.setId(Integer.toString(rs.getInt(1)));
                 periodical.setName(rs.getString(2));
                 periodical.setFrequencyPerYear(rs.getDouble(3));
+                periodical.setPricePerOne(rs.getDouble(4));
+                periodical.setDescription(rs.getString(5));
             }
 
         } catch (IOException | SQLException e) {
@@ -80,6 +84,8 @@ public class PeriodicalDao {
                 pCurrent.setId(Integer.toString(rs.getInt("pid")));
                 pCurrent.setName(rs.getString("name"));
                 pCurrent.setFrequencyPerYear(rs.getDouble("frequency"));
+                pCurrent.setPricePerOne(rs.getDouble("priceperone"));
+                pCurrent.setDescription(rs.getString("descr"));
                 periodicals.add(pCurrent);
             }
         } catch (IOException | SQLException e) {
@@ -97,7 +103,9 @@ public class PeriodicalDao {
             PreparedStatement ps = conn.prepareStatement(queryEditPeriodical);
             ps.setString(1, periodical.getName());
             ps.setDouble(2, periodical.getFrequencyPerYear());
-            ps.setInt(3, Integer.parseInt(periodical.getId()));
+            ps.setDouble(3, periodical.getPricePerOne());
+            ps.setString(4, periodical.getDescription());
+            ps.setInt(5, Integer.parseInt(periodical.getId()));
 
             int rowsAffected = ps.executeUpdate();
 

@@ -1,7 +1,9 @@
 package com.yehorpolishchuk.periodicals.db.dao;
 
 import com.yehorpolishchuk.periodicals.Constants;
+import com.yehorpolishchuk.periodicals.datastructures.Address;
 import com.yehorpolishchuk.periodicals.datastructures.Payment;
+import com.yehorpolishchuk.periodicals.datastructures.SubscribeUtil;
 import com.yehorpolishchuk.periodicals.datastructures.Subscription;
 import com.yehorpolishchuk.periodicals.db.providers.ConnectionProvider;
 import com.yehorpolishchuk.periodicals.exceptions.ServerException;
@@ -75,6 +77,8 @@ public class SubscriptionDao {
      * Returns key generated.
      * */
     public static int addSubscription(Subscription subscription, Connection conn) throws ServerException {
+        boolean commitInTheEnd = (conn == null);
+
         int key = Constants.NOT_ID_STUB;
         if (subscription == null){
             return key;
@@ -84,6 +88,7 @@ public class SubscriptionDao {
             if (conn == null){
              conn = ConnectionProvider.getConnection();
             }
+            conn.setAutoCommit(false);
 
             PreparedStatement ps = conn.prepareStatement(queryAddSubscription, Statement.RETURN_GENERATED_KEYS);
 
@@ -107,6 +112,9 @@ public class SubscriptionDao {
                 key = rsKeys.getInt(1);
             }
 
+            if (commitInTheEnd){
+                conn.commit();
+            }
         } catch (IOException | SQLException e) {
             logger.error(AddressDao.class.getName() + " Connection error: " + e.getMessage());
             throw new ServerException();
@@ -178,16 +186,22 @@ public class SubscriptionDao {
         return true;
     }
 
-    public static Payment addSubscriptionsAndPayment(ArrayList<Subscription> subscriptions, Payment payment) throws ServerException {
-        if (payment == null || subscriptions == null || subscriptions.size() == 0){
+    public static Payment addSubscriptionsAndPayment(ArrayList<Subscription> subscriptions, Payment payment, Connection conn) throws ServerException {
+        boolean commitInTheEnd = (conn == null);
+
+        if ((payment == null) || (subscriptions == null) || (subscriptions.size() == 0)){
+            logger.warn("PAYMENT OR SUBS OR SIZE = 0!");
             return null;
         }
 
         try{
-            Connection conn = ConnectionProvider.getConnection();
+            if (conn == null){
+                conn = ConnectionProvider.getConnection();
+            }
             conn.setAutoCommit(false);
 
             int paymentKey = PaymentDao.addPayment(payment, conn);
+            logger.info("PAYMENT KEY : " + paymentKey);
             payment.setId(Integer.toString(paymentKey));
 
             for (Subscription s : subscriptions){
@@ -195,7 +209,10 @@ public class SubscriptionDao {
                 s.setPaymentId(paymentKey);
                 addSubscription(s, conn);
             }
-            conn.commit();
+
+            if (commitInTheEnd){
+                conn.commit();
+            }
         } catch (IOException | SQLException e) {
             logger.error(AddressDao.class.getName() + " Connection error: " + e.getMessage());
             throw new ServerException();
@@ -203,4 +220,28 @@ public class SubscriptionDao {
 
         return payment;
     }
+
+    public static SubscribeUtil addSubscription(SubscribeUtil subscribeUtil) throws ServerException {
+        try{
+            Connection conn = ConnectionProvider.getConnection();
+            conn.setAutoCommit(false);
+
+            int readerKey = ReaderDao.addReader(subscribeUtil.getReader(), conn);
+            subscribeUtil.getReader().setId(Integer.toString(readerKey));
+            subscribeUtil.getSubscription().setReaderId(Integer.toString(readerKey));
+            subscribeUtil.getPayment().setReaderId(Integer.toString(readerKey));
+
+            ArrayList<Subscription> subs = new ArrayList<>();
+            subs.add(subscribeUtil.getSubscription());
+            SubscriptionDao.addSubscriptionsAndPayment(subs, subscribeUtil.getPayment(), conn);
+
+            conn.commit();
+        } catch (IOException | SQLException e) {
+            logger.error(AddressDao.class.getName() + " Connection error: " + e.getMessage());
+            throw new ServerException();
+        }
+
+        return subscribeUtil;
+    }
+
 }

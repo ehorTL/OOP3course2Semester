@@ -20,6 +20,6 @@ public class Periodical {
     private String id;
     private String name;
     private double frequencyPerYear;
-//    private String type;
-//    private String genre;
+    private double pricePerOne;
+    private String description;
 }
