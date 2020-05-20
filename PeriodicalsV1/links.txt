@@ -1,0 +1,27 @@
+Periodicals:
+/periodical/
+
+GET:
+/all
+/index
+POST:
+/admin/add + JSON
+PUT:
+admin/update/index
+DELETE:
+admin/delete/index
+
+Subscriptions:
+/subscription/
+GET:
+/price/index/terminmonth   (double returned)
+POST:
+/add + JSON
+/add/full + JSON
+
+Payment:
+/payment/
+POST:
+/add + JSON
+
+
