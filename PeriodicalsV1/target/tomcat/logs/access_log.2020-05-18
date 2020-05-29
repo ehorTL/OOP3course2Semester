@@ -1,0 +1,12 @@
+127.0.0.1 - - [18/May/2020:18:12:59 +0300] "GET / HTTP/1.1" 500 3951 http-bio-8080-exec-1 2194
+127.0.0.1 - - [18/May/2020:18:12:59 +0300] "GET /favicon.ico HTTP/1.1" 404 973 http-bio-8080-exec-2 0
+127.0.0.1 - - [18/May/2020:18:13:21 +0300] "GET /payment/ HTTP/1.1" 500 3538 http-bio-8080-exec-3 562
+127.0.0.1 - - [18/May/2020:18:55:50 +0300] "GET / HTTP/1.1" 200 52 http-bio-8080-exec-1 86
+127.0.0.1 - - [18/May/2020:18:55:50 +0300] "GET /favicon.ico HTTP/1.1" 404 973 http-bio-8080-exec-2 10
+0:0:0:0:0:0:0:1 - - [18/May/2020:19:29:12 +0300] "GET /periodical HTTP/1.1" 404 977 http-bio-8080-exec-4 412
+0:0:0:0:0:0:0:1 - - [18/May/2020:19:29:12 +0300] "GET /favicon.ico HTTP/1.1" 404 973 http-bio-8080-exec-5 10
+0:0:0:0:0:0:0:1 - - [18/May/2020:19:29:20 +0300] "GET /periodical/ HTTP/1.1" 404 977 http-bio-8080-exec-7 0
+127.0.0.1 - - [18/May/2020:22:58:14 +0300] "GET /periodical/all HTTP/1.1" 500 1876 http-bio-8080-exec-1 691
+127.0.0.1 - - [18/May/2020:22:58:15 +0300] "GET /favicon.ico HTTP/1.1" 404 973 http-bio-8080-exec-2 2
+127.0.0.1 - - [18/May/2020:23:00:58 +0300] "GET /periodical/all HTTP/1.1" 200 205 http-bio-8080-exec-1 8906
+127.0.0.1 - - [18/May/2020:23:01:19 +0300] "GET /periodical/1 HTTP/1.1" 200 106 http-bio-8080-exec-2 1340
